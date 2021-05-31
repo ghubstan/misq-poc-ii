@@ -36,7 +36,6 @@ jar {
     includeEmptyDirs false
 }
 
-
 tasks.withType(Test).configureEach {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     if (!project.hasProperty("createTestReports")) {
