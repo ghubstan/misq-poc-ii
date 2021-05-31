@@ -25,7 +25,7 @@ hs_err_pid*
 .idea/*
 .gradle/*
 gradlew
-
-spi-wallet.spvchain
-spi-wallet.wallet
+build
+buildSrc/.gradle/*
+spi-wallet.*
 
