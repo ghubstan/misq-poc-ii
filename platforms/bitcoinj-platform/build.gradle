@@ -1,0 +1,29 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+version '0.0.1-SNAPSHOT'
+
+dependencies {
+    constraints {
+        api('com.github.bisq-network:bitcoinj') {
+            version { require 'v0.15.8' }
+        }
+
+        api('org.bouncycastle:bcprov-jdk15to18') {
+            version { require '1.63' }
+        }
+
+        api('com.squareup.okhttp3:okhttp') {
+            version { require '3.12.8' }
+        }
+        api('com.squareup.okio:okio') {
+            version { require '1.15.0' }
+        }
+
+        api('net.jcip.annotations:jcip-annotations') {
+            version { require '1.0' }
+        }
+    }
+}

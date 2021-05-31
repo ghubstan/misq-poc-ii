@@ -1,0 +1,15 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+dependencies {
+    constraints {
+        api('io.reactivex.rxjava2:rxjava') {
+            version { require '2.1.12' }
+        }
+        api('org.reactivestreams:reactive-streams') {
+            version { require '1.0.2' }
+        }
+    }
+}

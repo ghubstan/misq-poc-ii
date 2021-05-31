@@ -1,0 +1,21 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+dependencies {
+    constraints {
+        // The api configuration should be used to declare constraints and
+        // dependencies which should be used when compiling against the platform.
+        api('org.junit.jupiter:junit-jupiter-api') {
+            version { require '5.7.2' }
+        }
+
+
+        // The runtime configuration should be used to declare
+        // constraints or dependencies which are visible at runtime.
+        runtime('org.junit.jupiter:junit-jupiter-engine') {
+            version { require '5.7.2' }
+        }
+    }
+}

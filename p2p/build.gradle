@@ -1,0 +1,34 @@
+plugins {
+    id 'java-library'
+    id 'com.google.protobuf' version '0.8.16'
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply from: '../buildSrc/gen-protos.gradle'
+
+dependencies {
+    api(project(':common'))
+
+    // Get recommended versions from the common-platform project.
+    api platform(project(':platforms:common-platform'))
+
+    // TODO Is this right place to declare plugin dependency?
+    api 'com.google.protobuf:protobuf-gradle-plugin'
+    api 'com.google.protobuf:protobuf-java'
+
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'ch.qos.logback:logback-classic'
+
+    api platform(project(':platforms:test-platform'))
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}

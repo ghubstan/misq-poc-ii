@@ -1,0 +1,26 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api(project(':common'))
+    api(project(':p2p'))
+
+    // Get recommended versions from the common-platform project.
+    api platform(project(':platforms:common-platform'))
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'ch.qos.logback:logback-classic'
+
+    api platform(project(':platforms:test-platform'))
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}

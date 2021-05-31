@@ -1,0 +1,63 @@
+plugins {
+    id 'java-library'
+    id 'java-library-distribution'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+version '0.0.1-SNAPSHOT'
+
+tasks.named('jar') {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
+distributions {
+    main {
+        distributionBaseName = 'bitcoinj-impl'
+        contents {
+            // Exclude bitcoinj-v0.15.8.jar from the dist;  it will dynamically loaded.
+            exclude('**/bitcoinj-v0.15.8.jar')
+        }
+    }
+}
+
+dependencies {
+    api platform(project(':platforms:common-platform'))
+    api platform(project(':platforms:bitcoinj-platform'))
+
+    api(project(':wallets:bitcoinj:bitcoinj-api'))
+
+    implementation 'com.github.bisq-network:bitcoinj'
+    implementation 'org.bouncycastle:bcprov-jdk15to18'
+    implementation 'com.google.guava:guava'
+
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'ch.qos.logback:logback-classic'
+
+    api platform(project(':platforms:test-platform'))
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.register('installBitcoinjImplJar') {
+    dependsOn tasks.withType(Jar)
+    doLast {
+        def spiJar = fileTree(layout.buildDirectory.dir("libs")).filter { it.isFile() }.files[0]
+        println "Copying bitcoinj spi implementation ${spiJar.name} to ${rootDir}/ext."
+        copy {
+            from spiJar
+            into "${rootDir}/ext"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

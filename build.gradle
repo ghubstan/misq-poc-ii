@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'org.misq'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+tasks.register('cleanExtJars') {
+    // Not run by default, run `$ ./gradlew cleanextjars` to delete extension jar files.
+    doLast {
+        println "Deleting extension jars:  ${rootDir}/ext/*.jar"
+        delete fileTree("${rootDir}/ext").matching {
+            include "**/*.jar"
+        }
+    }
+}

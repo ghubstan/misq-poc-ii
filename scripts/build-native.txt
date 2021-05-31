@@ -1,0 +1,73 @@
+export GRAALVM_HOME="/home/hector/runtime/graalvm/graalvm-ce-java16-21.1.0"
+export JAVA_HOME="$GRAALVM_HOME"
+
+
+
+
+# You do not have to specify each jar; you can use bash to build the colon delimited classpath.
+
+
+$GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
+    -H:+ReportExceptionStackTraces \
+    --no-fallback \
+    --no-server \
+    -H:Class=org.misq.application.MisqAppMain -H:Name=misq-app
+
+
+
+$GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
+    -H:+ReportExceptionStackTraces \
+    --trace-class-initialization=ch.qos.logback.classic.Logger \
+    --no-fallback \
+    --no-server \
+    -H:Class=org.misq.application.MisqAppMain -H:Name=misq-app
+
+$GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
+    -H:+ReportExceptionStackTraces \
+    --trace-class-initialization=org.slf4j.LoggerFactory \
+    --no-fallback \
+    --no-server \
+    -H:Class=org.misq.application.MisqAppMain -H:Name=misq-app
+
+
+
+
+
+
+
+
+
+
+$GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
+>     -H:+ReportExceptionStackTraces \
+>     --no-fallback \
+>     --no-server \
+>     -H:Class=org.misq.application.MisqAppMain -H:Name=misq-app
+[misq-app:67990]    classlist:   1,312.38 ms,  0.94 GB
+[misq-app:67990]        (cap):     426.91 ms,  1.19 GB
+[misq-app:67990]        setup:   1,473.58 ms,  1.19 GB
+To see how the classes got initialized, use --trace-class-initialization=org.slf4j.LoggerFactory,ch.qos.logback.classic.Logger
+[misq-app:67990]     analysis:   5,223.45 ms,  1.68 GB
+Error: Classes that should be initialized at run time got initialized during image building:
+ org.slf4j.LoggerFactory was unintentionally initialized at build time. To see why org.slf4j.LoggerFactory got initialized use --trace-class-initialization=org.slf4j.LoggerFactory
+ch.qos.logback.classic.Logger was unintentionally initialized at build time. To see why ch.qos.logback.classic.Logger got initialized use --trace-class-initialization=ch.qos.logback.classic.Logger
+
+com.oracle.svm.core.util.UserError$UserException: Classes that should be initialized at run time got initialized during image building:
+ org.slf4j.LoggerFactory was unintentionally initialized at build time. To see why org.slf4j.LoggerFactory got initialized use --trace-class-initialization=org.slf4j.LoggerFactory
+ch.qos.logback.classic.Logger was unintentionally initialized at build time. To see why ch.qos.logback.classic.Logger got initialized use --trace-class-initialization=ch.qos.logback.classic.Logger
+
+	at com.oracle.svm.core.util.UserError.abort(UserError.java:68)
+	at com.oracle.svm.hosted.classinitialization.ConfigurableClassInitialization.checkDelayedInitialization(ConfigurableClassInitialization.java:545)
+	at com.oracle.svm.hosted.classinitialization.ClassInitializationFeature.duringAnalysis(ClassInitializationFeature.java:228)
+	at com.oracle.svm.hosted.NativeImageGenerator.lambda$runPointsToAnalysis$14(NativeImageGenerator.java:765)
+	at com.oracle.svm.hosted.FeatureHandler.forEachFeature(FeatureHandler.java:71)
+	at com.oracle.svm.hosted.NativeImageGenerator.runPointsToAnalysis(NativeImageGenerator.java:765)
+	at com.oracle.svm.hosted.NativeImageGenerator.doRun(NativeImageGenerator.java:582)
+	at com.oracle.svm.hosted.NativeImageGenerator.lambda$run$2(NativeImageGenerator.java:495)
+	at java.base/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1414)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:295)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1016)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1665)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1598)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+Error: Image build request failed with exit status 1

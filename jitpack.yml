@@ -1,0 +1,12 @@
+jdk:
+  - openjdk16
+before_install:
+  - ./jitpack-ensure-java-16.sh installer
+install:
+  - if ! bash jitpack-ensure-java-16.sh use; then source ~/.sdkman/bin/sdkman-init.sh; fi
+  - echo "Checking java version..."
+  - java -version
+  - echo "Running a custom installer command..."
+  - ./gradlew clean build assemble -x test
+  - ./gradlew publishToMavenLocal
+

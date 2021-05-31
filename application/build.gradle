@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+    id 'application'
+    id 'distribution'
+}
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    project.mainClassName = 'org.misq.application.ApplicationMain'
+}
+
+dependencies {
+    implementation(project(':common'))
+    implementation(project(':p2p'))
+    implementation project(':api')
+    implementation project(':grpc')
+    implementation project(':web')
+    implementation project(':wallets:wallet-installer')
+
+    // Get recommended versions from the common-platform -> grpc-platform projects.
+    api platform(project(':platforms:common-platform'))
+    api platform(project(':platforms:grpc-platform'))
+
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'ch.qos.logback:logback-classic'
+
+    api platform(project(':platforms:test-platform'))
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
