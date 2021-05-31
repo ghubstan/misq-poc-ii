@@ -21,7 +21,7 @@ distributions {
     main {
         distributionBaseName = 'bitcoinj-impl'
         contents {
-            // Exclude bitcoinj-v0.15.8.jar from the dist;  it will dynamically loaded.
+            // Exclude bitcoinj-v0.15.8.jar from the dist;  it is dynamically loaded.
             exclude('**/bitcoinj-v0.15.8.jar')
         }
     }

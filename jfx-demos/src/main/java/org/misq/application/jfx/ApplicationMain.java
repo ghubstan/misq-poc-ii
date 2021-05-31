@@ -10,8 +10,13 @@ import javafx.stage.Stage;
 
 public class ApplicationMain extends Application {
 
-    // JVM Opts:
-    // --module-path <path-to>/javafx-sdk-16/lib --add-modules=javafx.controls,javafx.fxml,javafx.graphics
+    // Add JVM Opts to IDE Launcher:
+    //  --module-path <path-to>/javafx-sdk-16/lib --add-modules=javafx.controls,javafx.fxml,javafx.graphics
+
+    // Package the jfx-demo jar:
+    //  $ export BISQ_SHARED_FOLDER=/tmp
+    //  $ ./gradlew clean --console=plain packageInstallers
+
 
     public static void main(String[] args) {
         launch(args);

@@ -8,5 +8,9 @@ ext {
 
 dependencies {
     constraints {
+        // May not need a jfx-platform if the jfx gradle plugin takes care of deps.
+        api('org.openjfx:javafx-base') {
+            version { require '16' }
+        }
     }
 }

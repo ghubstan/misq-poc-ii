@@ -8,8 +8,16 @@ repositories {
     mavenCentral()
 }
 
+version '0.0.1-SNAPSHOT'
+
 application {
     project.mainClassName = 'org.misq.application.ApplicationMain'
+}
+
+distributions {
+    main {
+        distributionBaseName = 'application-dist'
+    }
 }
 
 dependencies {

@@ -3,20 +3,43 @@ plugins {
     id 'application'
     id 'distribution'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'com.google.osdetector' version '1.7.0'
 }
 
 repositories {
     mavenCentral()
 }
 
+version '0.0.1-SNAPSHOT'
+
+ext {
+    os = osdetector.os == 'osx' ? 'mac' : osdetector.os == 'windows' ? 'win' : osdetector.os
+}
+
 application {
     project.mainClassName = 'org.misq.application.jfx.ApplicationMain'
 }
 
+distributions {
+    main {
+        distributionBaseName = 'jfx-dist'
+    }
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': 'org.misq.application.jfx.ApplicationMain')
+    }
+}
+
 javafx {
     version = '16'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
+    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
 }
+
+apply from: 'package/package.gradle'
 
 dependencies {
     implementation(project(':common'))
@@ -36,4 +59,28 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+
+tasks.register('unpackDistribution') {
+    dependsOn tasks.withType(Distribution)
+    doLast {
+        def distributionDir = layout.buildDirectory.dir("distributions").get()
+        println ">>>>>>>>>> distributionDir -> ${distributionDir}"
+        def distributionZipFile = layout.buildDirectory.dir("distributions").get().file('jfx-dist-0.0.1-SNAPSHOT.zip')
+        println ">>>>>>>>>> distributionZipFile -> ${distributionZipFile}"
+        def unpackedDistributionPath = "${distributionDir.asFile}/unpacked-dist"
+        println ">>>>>>>>>> unpackedDistributionPath -> ${unpackedDistributionPath}"
+        mkdir "${unpackedDistributionPath}"
+        copy {
+            from zipTree(distributionZipFile)
+            into unpackedDistributionPath
+            // -> misq-poc-ii/jfx-demos/build/distributions/unpacked-dist/jfx-dist-0.0.1-SNAPSHOT/lib
+        }
+    }
+}
+
+
+
+
+
 

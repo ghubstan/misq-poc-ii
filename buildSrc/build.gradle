@@ -9,6 +9,8 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+
+
 ext {
     createTestReports = false
 }
@@ -18,6 +20,7 @@ configurations.all {
 }
 
 java {
+    modularity.inferModulePath = false
     withJavadocJar()
     withSourcesJar()
 }
@@ -25,8 +28,7 @@ java {
 tasks.named('compileJava') {
     sourceCompatibility = 16
     targetCompatibility = 16
-    modularity.inferModulePath = true
-    options.javaModuleVersion = provider { project.version }
+    modularity.inferModulePath = false
     options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
 }
 
@@ -52,3 +54,4 @@ tasks.named("javadoc") {
 tasks.named("test") {
     useJUnitPlatform()
 }
+
