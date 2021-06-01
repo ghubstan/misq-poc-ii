@@ -15,7 +15,8 @@ public class ApplicationMain extends Application {
 
     // Package the jfx-demo jar:
     //  $ export BISQ_SHARED_FOLDER=/tmp
-    //  $ ./gradlew clean --console=plain packageInstallers
+    //  $ ./gradlew clean build
+    //  $ ./gradlew --console=plain packageInstallers
 
 
     public static void main(String[] args) {
