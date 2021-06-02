@@ -9,8 +9,6 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-
-
 ext {
     createTestReports = false
 }
@@ -54,4 +52,3 @@ tasks.named("javadoc") {
 tasks.named("test") {
     useJUnitPlatform()
 }
-
