@@ -14,8 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Bisq. If not, see <http://www.gnu.org/licenses/>.
  */
-syntax = "proto3";
-package p2p.proto;
-option java_package = "org.misq.p2p.proto";
-option java_multiple_files = true;
 
+package misq.p2p;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class P2PService {
+    private static final Logger log = LoggerFactory.getLogger(P2PService.class);
+}

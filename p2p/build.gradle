@@ -17,7 +17,6 @@ dependencies {
     // Get recommended versions from the common-platform project.
     api platform(project(':platforms:common-platform'))
 
-    // TODO Is this right place to declare plugin dependency?
     api 'com.google.protobuf:protobuf-gradle-plugin'
     api 'com.google.protobuf:protobuf-java'
 
