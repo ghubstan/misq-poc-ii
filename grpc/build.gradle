@@ -10,9 +10,6 @@ repositories {
 version '0.0.1-SNAPSHOT'
 
 dependencies {
-    implementation project(':api')
-    implementation project(':wallets:wallet-installer')
-
     // Get recommended versions from the common-platform -> grpc-platform projects.
     api platform(project(':platforms:common-platform'))
     api platform(project(':platforms:grpc-platform'))
