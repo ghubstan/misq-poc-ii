@@ -6,8 +6,14 @@ plugins {
     id 'com.google.osdetector' version '1.7.0'
 }
 
+// https://docs.oracle.com/en/java/javase/16/jpackage/packaging-tool-user-guide.pdf
+// https://github.com/petr-panteleyev/jpackage-gradle-plugin
+// https://github.com/petr-panteleyev/jpackage-gradle-plugin/blob/master/doc/examples/Non-ModularApplication.md
+// https://github.com/petr-panteleyev/jpackage-gradle-plugin/blob/master/doc/examples/ModularFullRuntime.md
+
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 version '0.0.1-SNAPSHOT'
@@ -41,19 +47,12 @@ javafx {
 
 apply from: 'package/package.gradle'
 
+apply from: '../buildSrc/logging-dependencies.gradle'
+apply from: '../buildSrc/test-dependencies.gradle'
+
 dependencies {
+    implementation 'com.github.petr-panteleyev:jpackage-gradle-plugin:1.3.1'
     implementation(project(':common'))
-
-    api platform(project(':platforms:common-platform'))
-    api platform(project(':platforms:jfx-platform'))
-
-    implementation 'org.slf4j:slf4j-api'
-    implementation 'ch.qos.logback:logback-core'
-    implementation 'ch.qos.logback:logback-classic'
-
-    api platform(project(':platforms:test-platform'))
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 test {
@@ -65,11 +64,11 @@ tasks.register('unpackDistribution') {
     dependsOn tasks.withType(Distribution)
     doLast {
         def distributionDir = layout.buildDirectory.dir("distributions").get()
-        println ">>>>>>>>>> distributionDir -> ${distributionDir}"
+        println "unpackDistribution >> distributionDir -> ${distributionDir}"
         def distributionZipFile = layout.buildDirectory.dir("distributions").get().file('jfx-dist-0.0.1-SNAPSHOT.zip')
-        println ">>>>>>>>>> distributionZipFile -> ${distributionZipFile}"
+        println ">> distributionZipFile -> ${distributionZipFile}"
         def unpackedDistributionPath = "${distributionDir.asFile}/unpacked-dist"
-        println ">>>>>>>>>> unpackedDistributionPath -> ${unpackedDistributionPath}"
+        println "unpackDistribution >> unpackedDistributionPath -> ${unpackedDistributionPath}"
         mkdir "${unpackedDistributionPath}"
         copy {
             from zipTree(distributionZipFile)
@@ -78,9 +77,3 @@ tasks.register('unpackDistribution') {
         }
     }
 }
-
-
-
-
-
-
