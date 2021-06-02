@@ -3,13 +3,11 @@ rootProject.name = 'misq-poc-ii'
 include 'platforms:common-platform'
 include 'platforms:bitcoinj-platform'
 include 'platforms:grpc-platform'
-include 'platforms:reactive-platform'
 include 'platforms:web-platform'
 include 'platforms:test-platform'
 
 include 'platforms:jfx-platform'
 
-include 'api'
 include 'common'
 include 'grpc'
 include 'p2p'
@@ -24,7 +22,6 @@ include 'wallets:bitcoinj:bitcoinj-app'
 include 'application'
 
 include 'jfx'
-include 'reactive-demos'
 
 import org.gradle.util.GradleVersion
 
