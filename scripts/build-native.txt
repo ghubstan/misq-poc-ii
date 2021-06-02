@@ -11,7 +11,7 @@ $GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
     -H:+ReportExceptionStackTraces \
     --no-fallback \
     --no-server \
-    -H:Class=org.misq.application.ApplicationMain -H:Name=misq-app
+    -H:Class=misq.application.ApplicationMain -H:Name=misq-app
 
 
 
@@ -20,14 +20,14 @@ $GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
     --trace-class-initialization=ch.qos.logback.classic.Logger \
     --no-fallback \
     --no-server \
-    -H:Class=org.misq.application.ApplicationMain -H:Name=misq-app
+    -H:Class=misq.application.ApplicationMain -H:Name=misq-app
 
 $GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
     -H:+ReportExceptionStackTraces \
     --trace-class-initialization=org.slf4j.LoggerFactory \
     --no-fallback \
     --no-server \
-    -H:Class=org.misq.application.ApplicationMain -H:Name=misq-app
+    -H:Class=misq.application.ApplicationMain -H:Name=misq-app
 
 
 
@@ -42,7 +42,7 @@ $GRAALVM_HOME/bin/native-image -cp "$(printf %s: lib/*.jar)" \
 >     -H:+ReportExceptionStackTraces \
 >     --no-fallback \
 >     --no-server \
->     -H:Class=org.misq.application.ApplicationMain -H:Name=misq-app
+>     -H:Class=misq.application.ApplicationMain -H:Name=misq-app
 [misq-app:67990]    classlist:   1,312.38 ms,  0.94 GB
 [misq-app:67990]        (cap):     426.91 ms,  1.19 GB
 [misq-app:67990]        setup:   1,473.58 ms,  1.19 GB

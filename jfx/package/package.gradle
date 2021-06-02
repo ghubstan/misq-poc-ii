@@ -187,7 +187,7 @@ task packageInstallers {
 
                         // Options for creating the application launcher
                         " --main-jar ${mainJarName}" +
-                        " --main-class org.misq.jfx.ApplicationMain" +
+                        " --main-class misq.jfx.ApplicationMain" +
                         " --java-options -Xss1280k" +
                         // " --java-options -XX:MaxRAM=4g" +
                         " --java-options -Djava.net.preferIPv4Stack=true"

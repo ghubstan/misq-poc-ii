@@ -1,11 +1,9 @@
-package org.misq.grpc;
+package misq.grpc;
 
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.protobuf.services.ProtoReflectionService;
-import org.misq.common.di.annotation.Singleton;
-import org.misq.common.threadmodel.UserThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,6 @@ import java.io.UncheckedIOException;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-@Singleton
 public class GrpcServer {
     private static final Logger log = LoggerFactory.getLogger(GrpcServer.class);
 
@@ -22,7 +19,6 @@ public class GrpcServer {
 
     public GrpcServer() {
         this.server = ServerBuilder.forPort(9999)
-                .executor(UserThread.getExecutor())
                 .addService(ProtoReflectionService.newInstance())
                 .build();
     }

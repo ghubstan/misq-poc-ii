@@ -47,10 +47,10 @@ See https://docs.gradle.org/current/userguide/java_platform_plugin.html
 
 ## Remote Module Download / Dynamic Class Loading
 
-An example of the Java SPI api is shown in the `org.misq.common.classloader` package.
+An example of the Java SPI api is shown in the `misq.common.classloader` package.
 
 Prerequisite:  copy `bitcoinj-impl-0.0.1-SNAPSHOT.jar` to extension dir `ext`:
-  `$ ./gradlew installBitcoinjImplJar`
+`$ ./gradlew installBitcoinjImplJar`
 
 The bitcoinj spi poc:
 - Downloads `https://jitpack.io/com/github/bisq-network/bitcoinj/v0.15.8/bitcoinj-v0.15.8.jar` to the Misq extensions 
