@@ -1,27 +1,17 @@
 rootProject.name = 'misq-poc-ii'
 
 include 'platforms:common-platform'
-include 'platforms:bitcoinj-platform'
 include 'platforms:grpc-platform'
+include 'platforms:jfx-platform'
 include 'platforms:web-platform'
 include 'platforms:test-platform'
-
-include 'platforms:jfx-platform'
 
 include 'common'
 include 'grpc'
 include 'p2p'
-include 'web'
-
-include 'wallets:wallet-installer'
-include 'wallets:bitcoinj:bitcoinj-api'
-include 'wallets:bitcoinj:bitcoinj-dummy-impl'
-include 'wallets:bitcoinj:bitcoinj-impl'
-include 'wallets:bitcoinj:bitcoinj-app'
-
-include 'application'
-
 include 'jfx'
+include 'application'
+include 'web'
 
 import org.gradle.util.GradleVersion
 
