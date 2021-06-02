@@ -23,7 +23,7 @@ include 'wallets:bitcoinj:bitcoinj-app'
 
 include 'application'
 
-include 'jfx-demos'
+include 'jfx'
 include 'reactive-demos'
 
 import org.gradle.util.GradleVersion

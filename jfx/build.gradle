@@ -17,7 +17,7 @@ ext {
 }
 
 application {
-    project.mainClassName = 'org.misq.application.jfx.ApplicationMain'
+    project.mainClassName = 'misq.jfx.ApplicationMain'
 }
 
 distributions {
@@ -30,13 +30,13 @@ tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': project.name,
                 'Implementation-Version': project.version,
-                'Main-Class': 'org.misq.application.jfx.ApplicationMain')
+                'Main-Class': 'misq.jfx.ApplicationMain')
     }
 }
 
 javafx {
     version = '16'
-    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics']
+    modules = ['javafx.base', 'javafx.controls', 'javafx.graphics']
 }
 
 apply from: 'package/package.gradle'
@@ -74,7 +74,7 @@ tasks.register('unpackDistribution') {
         copy {
             from zipTree(distributionZipFile)
             into unpackedDistributionPath
-            // -> misq-poc-ii/jfx-demos/build/distributions/unpacked-dist/jfx-dist-0.0.1-SNAPSHOT/lib
+            // -> misq-poc-ii/jfx/build/distributions/unpacked-dist/jfx-dist-0.0.1-SNAPSHOT/lib
         }
     }
 }

@@ -137,7 +137,7 @@ task packageInstallers {
     description 'Call jpackage to prepare platform-specific binaries for this platform'
     dependsOn 'retrieveAndExtractJavaBinaries'
     dependsOn rootProject.clean
-    dependsOn ':jfx-demos:build'
+    dependsOn ':jfx:build'
     dependsOn 'unpackDistribution'
 
     doLast {
@@ -150,8 +150,8 @@ task packageInstallers {
         File jpackageTempDir = new File(tempRootDir, "jpackage-temp")
         jpackageTempDir.mkdirs()
 
-        String distributionLibsPath = "${project(':jfx-demos').buildDir}/distributions/unpacked-dist/jfx-dist-0.0.1-SNAPSHOT/lib"
-        String mainJarName = 'jfx-demos-0.0.1-SNAPSHOT.jar'
+        String distributionLibsPath = "${project(':jfx').buildDir}/distributions/unpacked-dist/jfx-dist-0.0.1-SNAPSHOT/lib"
+        String mainJarName = 'jfx-0.0.1-SNAPSHOT.jar'
 
         // See jpackager argument documentation:
         // https://docs.oracle.com/en/java/javase/16/docs/specs/man/jpackage.html
@@ -164,7 +164,7 @@ task packageInstallers {
         // zip jar lib for Raspberry Pi only on macOS as it is only needed once for the release
         if (Os.isFamily(Os.FAMILY_MAC)) {
             println "Zipping jar lib for raspberry pi"
-            ant.zip(basedir: "${project(':jfx-demos').buildDir}/app/lib",
+            ant.zip(basedir: "${project(':jfx').buildDir}/app/lib",
                     destfile: "${binariesFolderPath}/jar-lib-for-raspberry-pi-${appVersion}.zip")
         }
 
@@ -187,7 +187,7 @@ task packageInstallers {
 
                         // Options for creating the application launcher
                         " --main-jar ${mainJarName}" +
-                        " --main-class org.misq.application.jfx.ApplicationMain" +
+                        " --main-class org.misq.jfx.ApplicationMain" +
                         " --java-options -Xss1280k" +
                         // " --java-options -XX:MaxRAM=4g" +
                         " --java-options -Djava.net.preferIPv4Stack=true"
@@ -196,8 +196,8 @@ task packageInstallers {
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             // TODO Found no benefit in using --resource-dir "..package/windows", it has the same outcome as opts below
             String windowsOpts = new String(
-                    " --icon \"${project(':jfx-demos').projectDir}/package/windows/Bisq.ico\"" +
-                            " --resource-dir \"${project(':jfx-demos').projectDir}/package/windows\"" +
+                    " --icon \"${project(':jfx').projectDir}/package/windows/Bisq.ico\"" +
+                            " --resource-dir \"${project(':jfx').projectDir}/package/windows\"" +
                             " --win-dir-chooser" +
                             " --win-per-user-install" +
                             " --win-menu" +
@@ -219,7 +219,7 @@ task packageInstallers {
             // for details of "--resource-dir"
 
             String macOpts = new String(
-                    " --resource-dir \"${project(':jfx-demos').projectDir}/package/macosx\""
+                    " --resource-dir \"${project(':jfx').projectDir}/package/macosx\""
             )
 
             // Env variable can be set by calling "export BISQ_PACKAGE_SIGNING_IDENTITY='Some value'"
@@ -277,21 +277,21 @@ task packageInstallers {
                 executeCmd("codesign" +
                         " --sign \"${envVariableSigningID}\"" +
                         " --options runtime" +
-                        " --entitlements '${project(':jfx-demos').projectDir}/package/macosx/macos.entitlements'" +
+                        " --entitlements '${project(':jfx').projectDir}/package/macosx/macos.entitlements'" +
                         " --force" +
                         " --verbose" +
                         " ${bisqAppImageFullPath}/Contents/runtime/Contents/MacOS/libjli.dylib")
                 executeCmd("codesign" +
                         " --sign \"${envVariableSigningID}\"" +
                         " --options runtime" +
-                        " --entitlements '${project(':jfx-demos').projectDir}/package/macosx/macos.entitlements'" +
+                        " --entitlements '${project(':jfx').projectDir}/package/macosx/macos.entitlements'" +
                         " --force" +
                         " --verbose" +
                         " ${bisqAppImageFullPath}/Contents/MacOS/Bisq")
                 executeCmd("codesign" +
                         " --sign \"${envVariableSigningID}\"" +
                         " --options runtime" +
-                        " --entitlements '${project(':jfx-demos').projectDir}/package/macosx/macos.entitlements'" +
+                        " --entitlements '${project(':jfx').projectDir}/package/macosx/macos.entitlements'" +
                         " --force" +
                         " --verbose" +
                         " ${bisqAppImageFullPath}")
@@ -317,7 +317,7 @@ task packageInstallers {
                 executeCmd("codesign" +
                         " --sign \"${envVariableSigningID}\"" +
                         " --options runtime" +
-                        " --entitlements '${project(':jfx-demos').projectDir}/package/macosx/macos.entitlements'" +
+                        " --entitlements '${project(':jfx').projectDir}/package/macosx/macos.entitlements'" +
                         " -vvvv" +
                         " --deep" +
                         " '${binariesFolderPath}/Bisq-${appVersion}.dmg'")
@@ -335,7 +335,7 @@ task packageInstallers {
                         " --asc-provider '${envVariableAscProvider}'" +
                         " --file '${binariesFolderPath}/Bisq-${appVersion}.dmg'")
                 // Response:
-                //  No errors uploading '[PATH_TO_BISQ_REPO]/bisq/jfx-demos/build/temp-620637000/binaries/Bisq-1.1.1.dmg'.
+                //  No errors uploading '[PATH_TO_BISQ_REPO]/bisq/jfx/build/temp-620637000/binaries/Bisq-1.1.1.dmg'.
                 //  RequestUUID = ea8bba77-97b7-4c15-a53f-8bbccf627190
                 def requestUUID = uploadForNotarizationOutput.split('RequestUUID = ')[1].trim()
                 println "Extracted RequestUUID: " + requestUUID
@@ -378,7 +378,7 @@ task packageInstallers {
             }
         } else {
             String linuxOpts = new String(
-                    " --icon ${project(':jfx-demos').projectDir}/package/linux/icon.png" +
+                    " --icon ${project(':jfx').projectDir}/package/linux/icon.png" +
 
                             // This defines the first part of the resulting packages (the application name)
                             // deb requires lowercase letters, therefore the application name is written in lowercase
@@ -411,7 +411,7 @@ task packageInstallers {
         copy {
             from "${distributionLibsPath}/${mainJarName}"
             into binariesFolderPath
-            // jfx-demos-1.6.4-SNAPSHOT-all.jar => jfx-demos-1.6.4-SNAPSHOT-all-mac.jar (or -win.jar, or -linux.jar)
+            // jfx-1.6.4-SNAPSHOT-all.jar => jfx-1.6.4-SNAPSHOT-all-mac.jar (or -win.jar, or -linux.jar)
             rename { String fileName -> fileName.replace('-all.jar', "-all-" + os + ".jar") }
         }
 
