@@ -11,7 +11,7 @@ repositories {
 version '0.0.1-SNAPSHOT'
 
 application {
-    project.mainClassName = 'org.misq.application.ApplicationMain'
+    project.mainClassName = 'misq.application.ApplicationMain'
 }
 
 distributions {
@@ -22,15 +22,9 @@ distributions {
 
 dependencies {
     implementation(project(':common'))
-    implementation(project(':p2p'))
-    implementation project(':api')
-    implementation project(':grpc')
-    implementation project(':web')
-    implementation project(':wallets:wallet-installer')
 
     // Get recommended versions from the common-platform -> grpc-platform projects.
     api platform(project(':platforms:common-platform'))
-    api platform(project(':platforms:grpc-platform'))
 
     implementation 'org.slf4j:slf4j-api'
     implementation 'ch.qos.logback:logback-core'
