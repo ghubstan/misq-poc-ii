@@ -9,14 +9,11 @@ repositories {
 version '0.0.1-SNAPSHOT'
 
 dependencies {
-    api(project(':api'))
-
     // Get recommended versions from the common-platform -> grpc-platform projects.
     api platform(project(':platforms:common-platform'))
     api platform(project(':platforms:web-platform'))
 
     implementation project(':common')
-    implementation project(':api')
 
     implementation 'javax.annotation:javax.annotation-api'
 
